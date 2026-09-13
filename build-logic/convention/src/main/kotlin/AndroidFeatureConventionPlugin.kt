@@ -7,9 +7,9 @@ class AndroidFeatureConventionPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
+                apply("com.s.looka.android.library")
                 apply("com.s.looka.android.compose")
                 apply("com.s.looka.android.hilt")
-                apply("com.s.looka.android.library")
             }
 
             dependencies {

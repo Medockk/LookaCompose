@@ -43,7 +43,7 @@ gradlePlugin {
         }
 
         register("kotlinxSerialization") {
-            id = "com.s.looka.kotlinx.serialization"
+            id = "com.s.looka.android.serialization"
             implementationClass = "KotlinxSerializationConventionPlugin"
         }
     }

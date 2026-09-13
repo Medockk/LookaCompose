@@ -19,13 +19,13 @@ class AndroidLibraryConventionPlugin: Plugin<Project> {
                 defaultConfig {
                     minSdk = libs.findVersion("minSdk").get()
                         .requiredVersion.toInt()
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                    consumerProguardFile("consumer-rules.pro")
+//                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//                    consumerProguardFile("consumer-rules.pro")
                 }
 
                 compileOptions {
-                    targetCompatibility = JavaVersion.VERSION_11
-                    sourceCompatibility = JavaVersion.VERSION_11
+                    targetCompatibility = JavaVersion.VERSION_17
+                    sourceCompatibility = JavaVersion.VERSION_17
                 }
             }
         }

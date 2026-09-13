@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -22,6 +23,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.s.looka.core.ui.theme.colors.LocalAppColors
 import com.s.looka.core.ui.theme.shape.LocalAppShape
@@ -35,10 +37,13 @@ fun PrimaryButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     enabled: Boolean = true,
     shape: Shape = LocalAppShape.current.medium,
-    content: @Composable BoxScope.() -> Unit,
+    minHeight: Dp = 56.dp,
+    contentAlignment: Alignment = Alignment.Center,
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = modifier
+            .heightIn(min = minHeight)
             .clip(shape)
             .background(color = background)
             .semantics { role = Role.Button }
@@ -48,7 +53,8 @@ fun PrimaryButton(
                 enabled = enabled,
                 onClick = onClick
             ),
-        content = content
+        contentAlignment = contentAlignment,
+        content = { content() }
     )
 }
 
@@ -74,7 +80,7 @@ fun PrimaryButton(
     modifier = modifier
 ) {
     Row(
-        modifier = Modifier.matchParentSize(),
+        modifier = Modifier,
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

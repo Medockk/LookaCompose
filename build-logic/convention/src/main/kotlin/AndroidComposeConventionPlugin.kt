@@ -19,6 +19,7 @@ class AndroidComposeConventionPlugin: Plugin<Project> {
             dependencies {
                 val composeBom = libs.findLibrary("androidx-compose-bom").get()
                 add(Dependencies.implementation, platform(composeBom))
+                add(Dependencies.debugImplementation, platform(composeBom))
 
                 add(Dependencies.implementation, libs.findLibrary("androidx-core-ktx").get())
 
@@ -29,8 +30,13 @@ class AndroidComposeConventionPlugin: Plugin<Project> {
                 add(Dependencies.implementation, libs.findLibrary("androidx-compose-ui").get())
                 add(Dependencies.implementation, libs.findLibrary("androidx-compose-ui-graphics").get())
                 add(Dependencies.implementation, libs.findLibrary("androidx-compose-ui-tooling-preview").get())
+                add(Dependencies.implementation, libs.findLibrary("compose-adaptive").get())
+                add(Dependencies.implementation, libs.findLibrary("compose-adaptive-layout").get())
+                add(Dependencies.implementation, libs.findLibrary("compose-adaptive-navigation").get())
 
                 add(Dependencies.implementation, libs.findLibrary("androidx-lifecycle-runtime-ktx").get())
+
+                add(Dependencies.debugImplementation, libs.findLibrary("androidx-compose-ui-tooling").get())
             }
         }
     }

@@ -26,3 +26,4 @@ dependencyResolutionManagement {
 rootProject.name = "Looka"
 include(":app")
 include(":core:ui")
+include(":features:feature-auth")
