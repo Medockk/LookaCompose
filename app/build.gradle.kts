@@ -3,6 +3,7 @@ plugins {
     id("com.s.looka.android.compose")
 
     id("com.s.looka.android.hilt")
+    id("com.s.looka.android.serialization")
 }
 
 android {
@@ -25,6 +26,10 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
+
+    implementation(project(":features:feature-auth"))
+    implementation(project(":features:feature-homepage"))
 
 
     implementation(platform(libs.androidx.compose.bom))

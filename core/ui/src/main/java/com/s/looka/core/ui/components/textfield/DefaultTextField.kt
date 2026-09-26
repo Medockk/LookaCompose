@@ -29,7 +29,7 @@ fun DefaultTextField(
     modifier: Modifier = Modifier,
     keyboardOptions: DefaultTextFieldKeyboardOptions = DefaultTextFieldKeyboardOptions(),
     icon: DefaultTextFieldIcon = DefaultTextFieldIcon(),
-    onFocusGone: (() -> Unit)? = null,
+    onFocus: ((isFocused: Boolean) -> Unit)? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
     val isFocused by interactionSource.collectIsFocusedAsState()
@@ -39,9 +39,10 @@ fun DefaultTextField(
     LaunchedEffect(isFocused) {
         if (isFocused) {
             wasFocused = true
+            onFocus?.invoke(true)
         } else if (wasFocused) {
-            if (onFocusGone != null) {
-                onFocusGone()
+            if (onFocus != null) {
+                onFocus(false)
             }
             wasFocused = false
         }
@@ -55,7 +56,7 @@ fun DefaultTextField(
         maxLines = state.maxLines,
         singleLine = state.maxLines == 1,
         visualTransformation = state.visualTransformation,
-        label = state.placeholder?.let { placeholder ->
+        placeholder = state.placeholder?.let { placeholder ->
             {
                 Text(
                     text = placeholder,

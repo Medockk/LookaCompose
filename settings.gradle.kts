@@ -27,3 +27,6 @@ rootProject.name = "Looka"
 include(":app")
 include(":core:ui")
 include(":features:feature-auth")
+include(":core:navigation")
+include(":core:common")
+include(":features:feature-homepage")
