@@ -33,7 +33,7 @@ fun LoadingIndicator(
     
     LaunchedEffect(count) {
         while (true) {
-            delay(150.milliseconds)
+            delay(100.milliseconds)
             activeIndex = (activeIndex + 1) % count
         }
     }

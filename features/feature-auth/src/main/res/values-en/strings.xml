@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_account">Create an account</string>
+    <string name="let_s_create_your_account">Давайте создадим аккаунт.</string>
+    <string name="full_name">ФИО</string>
+    <string name="enter_your_full_name">Введите Ваше ФИО</string>
+    <string name="email">Электронная почта</string>
+    <string name="enter_your_email_address">Введите вашу электронную почту</string>
+    <string name="password">Пароль</string>
+    <string name="enter_your_password">Введите ваш пароль</string>
+    <string name="create_an_account">Создать аккаунт</string>
+    <string name="login">Login</string>
+</resources>

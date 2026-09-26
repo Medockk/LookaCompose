@@ -2,6 +2,7 @@ package com.s.looka.core.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
@@ -43,6 +44,7 @@ fun ApplicationLookaTheme(
         LocalAppColors provides colorScheme,
         LocalAppTypography provides appTypography,
         LocalTextStyle provides appTypography.b1Regular,
+        LocalContentColor provides colorScheme.primary900,
         LocalAppShape provides appShape,
         LocalDeviceConfiguration provides DeviceConfiguration.fromWindowSizeClass(windowAdaptiveInfo),
         content = content

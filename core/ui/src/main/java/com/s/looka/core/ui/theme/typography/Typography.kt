@@ -5,6 +5,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.s.looka.core.ui.R
 
@@ -18,88 +19,89 @@ internal val appTypography = AppTypography(
     h1Semibold = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 64.sp,
-        lineHeight = 80.sp,
+        lineHeight = 1.25.em,
         fontWeight = FontWeight.SemiBold
     ),
     h2Semibold = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 32.sp,
-        lineHeight = 100.sp,
+        lineHeight = 1.0.em,
+        letterSpacing = (-2).sp,
         fontWeight = FontWeight.SemiBold
     ),
     h3Semibold = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 24.sp,
-        lineHeight = 120.sp,
+        lineHeight = 1.2.em,
         fontWeight = FontWeight.SemiBold
     ),
     h4Semibold = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 20.sp,
-        lineHeight = 120.sp,
+        lineHeight = 1.2.em,
         fontWeight = FontWeight.SemiBold
     ),
     h4Medium = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 20.sp,
-        lineHeight = 120.sp,
+        lineHeight = 1.2.em,
         fontWeight = FontWeight.Medium
     ),
 
     b1Regular = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 16.sp,
-        lineHeight = 140.sp,
+        lineHeight = 22.sp,
         fontWeight = FontWeight.Normal
     ),
     b2Regular = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 14.sp,
-        lineHeight = 140.sp,
+        lineHeight = 20.sp,
         fontWeight = FontWeight.Normal
     ),
     b3Regular = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 12.sp,
-        lineHeight = 140.sp,
+        lineHeight = 16.sp,
         fontWeight = FontWeight.Normal
     ),
 
     b1Semibold = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 16.sp,
-        lineHeight = 140.sp,
+        lineHeight = 22.sp,
         fontWeight = FontWeight.SemiBold
     ),
     b2Semibold = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 14.sp,
-        lineHeight = 140.sp,
+        lineHeight = 20.sp,
         fontWeight = FontWeight.SemiBold
     ),
     b3Semibold = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 12.sp,
-        lineHeight = 140.sp,
+        lineHeight = 16.sp,
         fontWeight = FontWeight.SemiBold
     ),
 
     b1Medium = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 16.sp,
-        lineHeight = 140.sp,
+        lineHeight = 22.sp,
         fontWeight = FontWeight.Medium
     ),
     b2Medium = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 14.sp,
-        lineHeight = 140.sp,
+        lineHeight = 20.sp,
         fontWeight = FontWeight.Medium
     ),
     b3Medium = TextStyle(
         fontFamily = UnboundedFontFamily,
         fontSize = 12.sp,
-        lineHeight = 140.sp,
+        lineHeight = 16.sp,
         fontWeight = FontWeight.Medium
     ),
 )

@@ -2,6 +2,8 @@ package com.s.looka.core.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.s.looka.core.ui.theme.colors.AppColors
 import com.s.looka.core.ui.theme.colors.LocalAppColors
 import com.s.looka.core.ui.theme.shape.AppShape
@@ -25,4 +27,8 @@ object LookaTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalAppShape.current
+
+    val statusBarPadding: Dp
+        @Composable
+        get() = 10.dp
 }

@@ -16,6 +16,7 @@ enum class DeviceConfiguration {
             return when (widthClass) {
                 WindowWidthSizeClass.COMPACT if heightClass == WindowHeightSizeClass.MEDIUM -> MOBILE_PORTRAIT
                 WindowWidthSizeClass.COMPACT if heightClass == WindowHeightSizeClass.EXPANDED -> MOBILE_PORTRAIT
+                WindowWidthSizeClass.MEDIUM if heightClass == WindowHeightSizeClass.COMPACT -> MOBILE_LANDSCAPE
                 WindowWidthSizeClass.EXPANDED if heightClass == WindowHeightSizeClass.COMPACT -> MOBILE_LANDSCAPE
                 else -> MOBILE_PORTRAIT
             }

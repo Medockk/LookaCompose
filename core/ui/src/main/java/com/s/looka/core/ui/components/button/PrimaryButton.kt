@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.heightIn
@@ -25,6 +24,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.s.looka.core.ui.theme.LookaTheme
 import com.s.looka.core.ui.theme.colors.LocalAppColors
 import com.s.looka.core.ui.theme.shape.LocalAppShape
 import com.s.looka.core.ui.theme.typography.LocalAppTypography
@@ -45,7 +45,7 @@ fun PrimaryButton(
         modifier = modifier
             .heightIn(min = minHeight)
             .clip(shape)
-            .background(color = background)
+            .background(color = if (enabled) background else LookaTheme.colors.primary200)
             .semantics { role = Role.Button }
             .clickable(
                 interactionSource = interactionSource,

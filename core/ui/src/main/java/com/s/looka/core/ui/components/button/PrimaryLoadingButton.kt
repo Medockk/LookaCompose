@@ -45,7 +45,7 @@ fun PrimaryLoadingButton(
     label: String,
     modifier: Modifier = Modifier,
     @IntRange(from = 8)
-    loadingBars: Int = 10,
+    loadingBars: Int = 16,
     indicatorSize: Dp = 24.dp,
     background: Color = LocalAppColors.current.primary900,
     onBackground: Color = LocalAppColors.current.primary0,
