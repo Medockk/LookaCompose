@@ -20,7 +20,8 @@ fun AuthHeader(
     ) {
         Text(
             text = title,
-            style = LookaTheme.typography.h2Semibold
+            style = LookaTheme.typography.h2Semibold,
+            color = LookaTheme.colors.primary900
         )
         Spacer(Modifier.height(4.dp))
         Text(

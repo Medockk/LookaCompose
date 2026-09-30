@@ -6,7 +6,7 @@ inline fun <T> Result<T>.onSuccess(action: (T) -> Unit): Result<T> {
     if (this is Result.Success) {
         action(this.data)
     }
-    
+
     return this
 }
 
@@ -33,3 +33,10 @@ inline fun <T> Result<T>.onState(action: (DataState) -> Unit): Result<T> {
 
     return this
 }
+
+fun <T> Result<T>.requireData(): T = if (this is Result.Success) data
+    else error("Failed to exact data")
+
+fun <T> Result<T>.get() = if (this is Result.Success) data
+    else null
+

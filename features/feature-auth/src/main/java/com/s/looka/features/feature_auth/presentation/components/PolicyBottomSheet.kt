@@ -34,6 +34,7 @@ fun PolicyBottomSheet(
         ModalBottomSheet(
             onDismissRequest = onDismissRequest,
             containerColor = LookaTheme.colors.primary0,
+            contentColor = LookaTheme.colors.primary800,
             shape = RoundedCornerShape(
                 topStart = 20.dp,
                 topEnd = 20.dp
@@ -49,7 +50,8 @@ fun PolicyBottomSheet(
                 item {
                     Text(
                         text = label,
-                        style = LookaTheme.typography.h3Semibold
+                        style = LookaTheme.typography.h3Semibold,
+                        color = LookaTheme.colors.primary900
                     )
                 }
                 item {

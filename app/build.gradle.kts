@@ -30,7 +30,13 @@ dependencies {
 
     implementation(project(":features:feature-auth"))
     implementation(project(":features:feature-homepage"))
+    implementation(project(":features:feature-search"))
+    implementation(project(":features:feature-favorite"))
+    implementation(project(":features:feature-cart"))
+    implementation(project(":features:feature-account"))
 
+    // HiltViewModel
+    implementation(libs.hilt.compose)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
