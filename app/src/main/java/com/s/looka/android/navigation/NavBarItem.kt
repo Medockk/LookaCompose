@@ -1,4 +1,4 @@
-package com.s.looka.core.ui.components.navigation
+package com.s.looka.android.navigation
 
 import androidx.annotation.DrawableRes
 
@@ -7,14 +7,14 @@ data class NavBarItem(
     val icon: Int,
 
     val label: String,
-    val isSelected: Boolean,
-    val onClick: () -> Unit,
+    val type: Type,
+    val isSelected: Boolean
 ) {
-    sealed interface Items {
-        data object Home: Items
-        data object Search: Items
-        data object Favorite: Items
-        data object Cart: Items
-        data object Profile: Items
+    sealed interface Type {
+        data object Home: Type
+        data object Search: Type
+        data object Favorite: Type
+        data object Cart: Type
+        data object Account: Type
     }
 }

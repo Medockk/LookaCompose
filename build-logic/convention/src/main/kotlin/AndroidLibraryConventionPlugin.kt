@@ -1,5 +1,4 @@
 import com.android.build.api.dsl.LibraryExtension
-import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -10,6 +9,7 @@ class AndroidLibraryConventionPlugin: Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("com.android.library")
+                apply("com.s.looka.kotlin.compiler")
             }
 
             extensions.configure<LibraryExtension> {
@@ -21,11 +21,6 @@ class AndroidLibraryConventionPlugin: Plugin<Project> {
                         .requiredVersion.toInt()
 //                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 //                    consumerProguardFile("consumer-rules.pro")
-                }
-
-                compileOptions {
-                    targetCompatibility = JavaVersion.VERSION_17
-                    sourceCompatibility = JavaVersion.VERSION_17
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.s.looka.core.ui.components.navigation
+package com.s.looka.android.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,7 +8,8 @@ import com.s.looka.core.ui.util.LocalDeviceConfiguration
 
 @Composable
 fun NavigationBar(
-    selectedItem: NavBarItem.Items,
+    onNavigate: (NavBarItem.Type?) -> Unit,
+    selectedItem: NavBarItem.Type,
     modifier: Modifier = Modifier
 ) {
     val deviceConfiguration = LocalDeviceConfiguration.current
@@ -17,38 +18,38 @@ fun NavigationBar(
         NavBarItem(
             icon = R.drawable.ic_navigation_home_icon,
             label = "Home",
-            isSelected = NavBarItem.Items.Home == selectedItem,
-            onClick = {}
+            isSelected = NavBarItem.Type.Home == selectedItem,
+            type = NavBarItem.Type.Home
         ),
         NavBarItem(
             icon = R.drawable.ic_navigation_search_icon,
             label = "Search",
-            isSelected = NavBarItem.Items.Search == selectedItem,
-            onClick = {}
+            isSelected = NavBarItem.Type.Search == selectedItem,
+            type = NavBarItem.Type.Search
         ),
         NavBarItem(
             icon = R.drawable.ic_navigation_favorite_icon,
             label = "Favorite",
-            isSelected = NavBarItem.Items.Favorite == selectedItem,
-            onClick = {}
+            isSelected = NavBarItem.Type.Favorite == selectedItem,
+            type = NavBarItem.Type.Favorite
         ),
         NavBarItem(
             icon = R.drawable.ic_navigation_cart_icon,
             label = "Cart",
-            isSelected = NavBarItem.Items.Cart == selectedItem,
-            onClick = {}
+            isSelected = NavBarItem.Type.Cart == selectedItem,
+            type = NavBarItem.Type.Cart
         ),
         NavBarItem(
-            icon = R.drawable.ic_navigation_profile_icon,
+            icon = R.drawable.ic_navigation_account_icon,
             label = "Account",
-            isSelected = NavBarItem.Items.Profile == selectedItem,
-            onClick = {}
+            isSelected = NavBarItem.Type.Account == selectedItem,
+            type = NavBarItem.Type.Account
         ),
     )
 
     when (deviceConfiguration) {
         DeviceConfiguration.MOBILE_PORTRAIT -> {
-            PortraitNavigationBar(navBarItems, modifier)
+            PortraitNavigationBar(onNavigate, navBarItems, modifier)
         }
         DeviceConfiguration.MOBILE_LANDSCAPE -> {
 

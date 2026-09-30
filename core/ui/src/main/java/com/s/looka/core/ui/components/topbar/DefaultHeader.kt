@@ -9,13 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.s.looka.core.ui.R
 import com.s.looka.core.ui.theme.LookaTheme
 
 @Composable
-fun HomepageHeader(
+fun DefaultHeader(
+    label: String,
     onNotificationClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -24,7 +24,7 @@ fun HomepageHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(R.string.discover),
+            text = label,
             style = LookaTheme.typography.h2Semibold,
             color = LookaTheme.colors.primary900
         )
@@ -34,7 +34,8 @@ fun HomepageHeader(
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_notification_bell),
-                contentDescription = "Notifications"
+                contentDescription = "Notifications",
+                tint = LookaTheme.colors.primary900
             )
         }
     }

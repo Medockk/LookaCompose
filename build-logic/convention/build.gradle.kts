@@ -17,6 +17,17 @@ dependencies {
 
 gradlePlugin {
     plugins {
+
+        register("kotlinCompilerModule") {
+            id = "com.s.looka.kotlin.compiler"
+            implementationClass = "KotlinCompilerOptionsConventionPlugin"
+        }
+
+        register("kotlinModule") {
+            id = "com.s.looka.kotlin"
+            implementationClass = "KotlinModuleConventionPlugin"
+        }
+
         register("androidCompose") {
             id = "com.s.looka.android.compose"
             implementationClass = "AndroidComposeConventionPlugin"

@@ -7,5 +7,6 @@ android {
 }
 
 dependencies {
+    compileOnly(project(":core:common"))
     compileOnly(libs.androidx.lifecycle.viewmodel)
 }

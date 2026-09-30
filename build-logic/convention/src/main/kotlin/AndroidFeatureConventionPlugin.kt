@@ -28,6 +28,7 @@ class AndroidFeatureConventionPlugin: Plugin<Project> {
                 add(Dependencies.implementation, libs.findLibrary("androidx-navigation").get())
                 add(Dependencies.implementation, project(":core:navigation"))
                 add(Dependencies.implementation, project(":core:common"))
+                add(Dependencies.implementation, project(":core:common-android"))
                 add(Dependencies.implementation, project(":core:ui"))
             }
         }

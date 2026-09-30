@@ -15,6 +15,7 @@ fun NavGraphBuilder.featureAuth(
     navigator: Navigator,
     onSuccessAuthentication: () -> Unit
 ) {
+    // TODO: create shared viewmodel for `email`, `password`!
     navigation<FeatureAuthNavigation>(
         startDestination = FeatureAuthNavigation.SignupScreen
     ) {

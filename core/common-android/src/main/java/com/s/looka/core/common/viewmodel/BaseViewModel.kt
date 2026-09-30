@@ -2,8 +2,6 @@ package com.s.looka.core.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.s.looka.core.common.result.Result
-import com.s.looka.core.common.result.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow

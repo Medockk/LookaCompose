@@ -26,11 +26,19 @@
             <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/common-android" />
             <option value="$PROJECT_DIR$/core/navigation" />
             <option value="$PROJECT_DIR$/core/ui" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/clothes" />
+            <option value="$PROJECT_DIR$/domain/clothes/category" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/feature-account" />
             <option value="$PROJECT_DIR$/features/feature-auth" />
+            <option value="$PROJECT_DIR$/features/feature-cart" />
+            <option value="$PROJECT_DIR$/features/feature-favorite" />
             <option value="$PROJECT_DIR$/features/feature-homepage" />
+            <option value="$PROJECT_DIR$/features/feature-search" />
           </set>
         </option>
       </GradleProjectSettings>

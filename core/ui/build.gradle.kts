@@ -6,7 +6,8 @@ plugins {
 android {
     namespace = "com.s.looka.core.ui"
 }
-
 dependencies {
     implementation(project(":core:common"))
+    implementation(project(":core:common-android"))
 }
+

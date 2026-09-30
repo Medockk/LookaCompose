@@ -1,5 +1,4 @@
 import com.android.build.api.dsl.ApplicationExtension
-import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -11,6 +10,8 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.plugin.compose")
+
+                apply("com.s.looka.kotlin.compiler")
             }
 
             extensions.configure<ApplicationExtension> {
@@ -26,11 +27,6 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
                         .get().requiredVersion.toInt()
 
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                }
-
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_17
-                    targetCompatibility = JavaVersion.VERSION_17
                 }
 
                 buildTypes {
