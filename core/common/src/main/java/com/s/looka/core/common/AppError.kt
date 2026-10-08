@@ -1,7 +1,9 @@
 package com.s.looka.core.common
 
 interface AppError {
-    data class Http(val httpCode: Int): AppError
+    data class Http(val httpCode: Int): AppError {
+        data object NoInternet: AppError
+    }
 
     interface Local<T>: AppError {
         val type: T
