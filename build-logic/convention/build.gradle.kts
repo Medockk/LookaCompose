@@ -35,7 +35,12 @@ gradlePlugin {
 
         register("hilt") {
             id = "com.s.looka.android.hilt"
-            implementationClass = "HiltConventionPlugin"
+            implementationClass = "hilt.HiltConventionPlugin"
+        }
+
+        register("hiltTesting") {
+            id = "com.s.looka.android.hilt.testing"
+            implementationClass = "hilt.HiltTestingConventionPlugin"
         }
 
         register("androidLibrary") {
