@@ -1,6 +1,9 @@
 package com.s.looka.android.navigation
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.Scaffold
@@ -13,10 +16,8 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.s.looka.core.navigation.Navigator
-import com.s.looka.core.ui.util.LocalNavigationBarVisibility
 import com.s.looka.features.favorite.presentation.FeatureFavoriteNavGraph
 import com.s.looka.features.feature_account.presentation.FeatureAccountNavGraph
-import com.s.looka.features.feature_auth.FeatureAuthNavigation
 import com.s.looka.features.feature_cart.presentation.FeatureCartNavGraph
 import com.s.looka.features.feature_homepage.presentation.FeatureHomeNavigation
 import com.s.looka.features.feature_search.presentation.FeatureSearchNavGraph
@@ -27,7 +28,6 @@ fun Navigator.NavigationContainer(
     modifier: Modifier = Modifier,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val navigationBarVisibility = LocalNavigationBarVisibility.current
     val backStackEntry by controller.currentBackStackEntryAsState()
     val currentNavDestination = backStackEntry?.destination
 
@@ -40,18 +40,18 @@ fun Navigator.NavigationContainer(
         else -> NavBarItem.Type.Search
     }
     Log.d("NavBar", "NavContainer: selectedNavItem: $selectedNavItem")
-    Log.i("NavBar", "NavContainer: backStack: ${backStackEntry}")
-
-    val isTopLevelDestination = when {
-        currentNavDestination?.hasRoute<FeatureAuthNavigation>() == true -> false
-        else -> navigationBarVisibility.value
-    }
+    Log.i("NavBar", "NavContainer: backStack: $backStackEntry")
 
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(),
         bottomBar = {
-            if (isTopLevelDestination) {
+            val isNavigationBarVisible = registry.isNavigationBarVisible(currentNavDestination?.route)
+            AnimatedVisibility(
+                isNavigationBarVisible,
+                enter = EnterTransition.None,
+                exit = ExitTransition.None
+            ) {
                 NavigationBar(
                     selectedItem = selectedNavItem,
                     onNavigate = { type ->

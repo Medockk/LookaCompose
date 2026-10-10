@@ -15,8 +15,22 @@ android {
         versionName = "1.0"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = rootProject.file("app/looka")
+            storePassword = "qwe1@3QWE" // TODO use BuildConstants
+            keyAlias = "key0"
+            keyPassword = "qwe1@3QWE"
+        }
+    }
+
     buildTypes {
         release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            signingConfig = signingConfigs.getByName("release")
+
             optimization {
                 enable = false
             }
