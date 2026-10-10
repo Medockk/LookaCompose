@@ -1,18 +1,17 @@
-@file:OptIn(ExperimentalLayoutApi::class)
-
 package com.s.looka.android
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.s.looka.android.navigation.NavigationContainer
 import com.s.looka.core.navigation.Navigator
-import com.s.looka.core.navigation.collectNavCommands
+import com.s.looka.core.navigation.compose.collectNavCommands
 import com.s.looka.features.favorite.presentation.featureFavoriteGraph
 import com.s.looka.features.feature_account.presentation.featureAccountGraph
 import com.s.looka.features.feature_auth.FeatureAuthNavigation
@@ -28,17 +27,18 @@ fun MainApplicationUI(navigator: Navigator) {
     val controller = rememberNavController()
     navigator.collectNavCommands(navController = controller)
 
+    val currentBackStack by controller.currentBackStackEntryAsState()
+    val metadata = navigator.registry.metadataFor(currentBackStack?.destination?.route)
+
     navigator.NavigationContainer(controller) { p ->
         NavHost(
             modifier = Modifier.padding(p),
             navController = controller,
             startDestination = FeatureHomeNavigation,
-            enterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start)
-            },
-            exitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
-            }
+//            enterTransition = metadata?.enterTransition ?: { fadeIn() },
+//            exitTransition = metadata?.exitTransition ?: { fadeOut() },
+            popEnterTransition = {slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End)},
+            popExitTransition = {slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start)}
         ) {
             featureAuth(navigator) {
                 navigator.navigate(FeatureHomeNavigation) {

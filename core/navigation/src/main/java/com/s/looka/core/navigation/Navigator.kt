@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.SharedFlow
 
 interface Navigator {
     val navCommands: SharedFlow<NavCommand>
+    val registry: NavigationDestinationRegistry
 
     fun navigate(route: Any, options: (NavOptionsBuilder.() -> Unit)? = null)
     fun navigateUp()

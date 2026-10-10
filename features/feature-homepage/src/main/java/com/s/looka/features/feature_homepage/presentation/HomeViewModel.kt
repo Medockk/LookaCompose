@@ -1,6 +1,5 @@
 package com.s.looka.features.feature_homepage.presentation
 
-import androidx.lifecycle.ViewModel
 import com.s.looka.core.common.viewmodel.BaseViewModelEvent
 import com.s.looka.core.common.viewmodel.BaseViewModelHolder
 import dagger.hilt.android.lifecycle.HiltViewModel

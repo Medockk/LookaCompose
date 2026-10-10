@@ -16,6 +16,7 @@ internal class NavigatorImpl @Inject constructor(): Navigator {
 
     private val _navCommands = MutableSharedFlow<NavCommand>(extraBufferCapacity = 1)
     override val navCommands: SharedFlow<NavCommand> = _navCommands.asSharedFlow()
+    override val registry: NavigationDestinationRegistry = NavigationDestinationRegistry()
 
     override fun navigate(route: Any, options: (NavOptionsBuilder.() -> Unit)?) {
         Log.i(TAG, "navigate: Navigate to $route with options $options")

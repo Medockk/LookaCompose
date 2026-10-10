@@ -1,4 +1,4 @@
-package com.s.looka.core.navigation
+package com.s.looka.core.navigation.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

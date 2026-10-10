@@ -2,6 +2,7 @@ package com.s.looka.features.feature_homepage.presentation.screen
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,10 +17,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,7 +31,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.core.net.toUri
 import com.s.looka.core.navigation.Navigator
 import com.s.looka.core.ui.components.chip.DefaultChip
 import com.s.looka.core.ui.components.textfield.DefaultTextField
@@ -43,7 +42,6 @@ import com.s.looka.core.ui.util.LocalNavigationBarVisibility
 import com.s.looka.features.feature_homepage.R
 import com.s.looka.features.feature_homepage.presentation.HomeAction
 import com.s.looka.features.feature_homepage.presentation.HomeState
-import com.s.looka.features.feature_homepage.presentation.HomeViewModel
 import kotlin.random.Random
 
 @Composable
@@ -129,7 +127,9 @@ internal fun HomePortraitScreen(
                                     Random.nextFloat(),
                                     Random.nextFloat(),
                                 )
-                            ).padding(5.dp)
+                            ).clickable {
+                                navigator.navigate("looka://market/my".toUri())
+                            }.padding(5.dp)
                     )
                 }
             }
