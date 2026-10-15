@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {
 
-    fun observeAllCategories(): Flow<Result<CategoryModel>>
+    fun observeAllCategories(): Flow<Result<List<CategoryModel>>>
     suspend fun fetchAllCategories(): Result<List<CategoryModel>>
 
     suspend fun fetchCategoryPage(page: Any): Result<List<CategoryModel>>

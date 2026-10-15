@@ -4,11 +4,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.s.looka.core.navigation.Navigator
+import com.s.looka.core.navigation.compose.appComposable
 
 fun NavGraphBuilder.featureAccountGraph(navigator: Navigator) {
     navigation<FeatureAccountNavGraph>(
         startDestination = FeatureAccountNavGraph.Account
     ) {
-        composable<FeatureAccountNavGraph.Account> {}
+        appComposable<FeatureAccountNavGraph.Account>(navigator.registry) {}
     }
 }
