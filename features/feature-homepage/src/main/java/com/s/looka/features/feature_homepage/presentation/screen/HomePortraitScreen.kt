@@ -1,75 +1,60 @@
 package com.s.looka.features.feature_homepage.presentation.screen
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.s.looka.core.navigation.Navigator
+import com.s.looka.core.ui.components.ProductCard
 import com.s.looka.core.ui.components.chip.DefaultChip
-import com.s.looka.core.ui.components.textfield.DefaultTextField
-import com.s.looka.core.ui.components.textfield.DefaultTextFieldState
 import com.s.looka.core.ui.components.topbar.DefaultHeader
 import com.s.looka.core.ui.theme.LookaTheme
-import com.s.looka.core.ui.util.LocalNavigationBarVisibility
 import com.s.looka.features.feature_homepage.R
 import com.s.looka.features.feature_homepage.presentation.HomeAction
 import com.s.looka.features.feature_homepage.presentation.HomeState
-import kotlin.random.Random
+import com.s.looka.features.feature_homepage.presentation.ProductDetails
+import com.s.looka.features.feature_homepage.presentation.screen.component.FilterBox
+import com.s.looka.features.feature_homepage.presentation.screen.component.SearchField
+import com.s.looka.features.feature_homepage.presentation.screen.component.productNestedScrollConnection
 
 @Composable
 internal fun HomePortraitScreen(
     navigator: Navigator,
     state: HomeState,
-    onAction: (HomeAction) -> Unit
+    searchQuery: String,
+    onAction: (HomeAction) -> Unit,
+    onSearchQueryChange: (String) -> Unit,
 ) {
-
-    val verticalScrollState = rememberLazyListState()
     var isSearchFieldVisible by remember { mutableStateOf(true) }
-    val nestedScroll = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                val delta = available.y
-                if (delta > 15f) {
-                    isSearchFieldVisible = true
-                } else if (delta < -15f) isSearchFieldVisible = false
-                return Offset.Zero
-            }
-        }
-    }
-
-
-    val isNavigationBarVisible = LocalNavigationBarVisibility.current
-    LaunchedEffect(Unit) {
-        isNavigationBarVisible.value = true
-    }
+    val nestedScroll = productNestedScrollConnection { isSearchFieldVisible = it }
 
     Scaffold(
         contentWindowInsets = WindowInsets.statusBars,
@@ -88,48 +73,78 @@ internal fun HomePortraitScreen(
             DefaultHeader(
                 label = stringResource(R.string.discover),
                 onNotificationClick = { },
+                modifier = Modifier.padding(horizontal = 24.dp)
             )
 
-            AnimatedContent(isSearchFieldVisible) {
+            AnimatedContent(
+                targetState = isSearchFieldVisible,
+                transitionSpec = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Down, tween(220))
+                        .togetherWith(
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Up, tween(220))
+                        )
+                }
+            ) {
                 if (it) {
-                    Column {
-                        DefaultTextField(
-                            state = DefaultTextFieldState(
-                                value = "", {}
-                            )
+                    Row(Modifier.fillMaxWidth()) {
+                        SearchField(
+                            searchQuery = searchQuery,
+                            onSearchQueryChange = onSearchQueryChange,
+                            modifier = Modifier.weight(1f).padding(start = 24.dp)
                         )
 
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp)
-                        ) {
-                            items(state.categories) { category ->
-                                DefaultChip(
-                                    label = category.name,
-                                    isSelected = state.selectedCategoryIds.contains(category.id),
-                                    onClick = { onAction(HomeAction.OnCategoryClick(category.id)) }
-                                )
-                            }
-                        }
+                        Spacer(Modifier.width(24.dp))
+
+                        FilterBox(
+                            onClick = {}
+                        )
                     }
                 }
             }
 
-            LazyColumn(state = verticalScrollState) {
+            Spacer(Modifier.height(15.dp))
 
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                contentPadding = PaddingValues(horizontal = 24.dp)
+            ) {
+                item {
+                    DefaultChip(
+                        label = "All",
+                        isSelected = true,
+                        onClick = {}
+                    )
+                }
+                items(state.categories) { category ->
+                    DefaultChip(
+                        label = category.name,
+                        isSelected = state.selectedCategoryIds.contains(category.id),
+                        onClick = { onAction(HomeAction.OnCategoryClick(category.id)) }
+                    )
+                }
+            }
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentPadding = PaddingValues(horizontal = 24.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
                 items(50) {
-                    Spacer(
-                        Modifier
-                            .size(50.dp)
-                            .background(
-                                Color(
-                                    Random.nextFloat(),
-                                    Random.nextFloat(),
-                                    Random.nextFloat(),
-                                )
-                            ).clickable {
-                                navigator.navigate("looka://market/my".toUri())
-                            }.padding(5.dp)
+                    ProductCard(
+                        name = "Product #$it",
+                        price = 1234.23f,
+                        isFavorite = it % 5 == 0,
+                        onFavoriteIconClick = {},
+                        photoUrl = "https://www.mydesignation.com/cdn/shop/files/unstoppable-reflective-print-oversized-t-shirt-mydesignation-4800251.jpg?v=1778972951",
+                        modifier = Modifier.clickable {
+                            navigator.navigate(ProductDetails)
+                        },
+                        discount = if (it % 6 == 0) 52.2f
+                        else null
                     )
                 }
             }

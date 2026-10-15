@@ -16,10 +16,11 @@ fun HomeScreenRoot(
 ) {
     val deviceConfiguration = LocalDeviceConfiguration.current
     val state by viewModel.state.collectAsState()
+    val searchQuery by viewModel.search.collectAsState()
 
     when (deviceConfiguration) {
         DeviceConfiguration.MOBILE_PORTRAIT -> {
-            HomePortraitScreen(navigator, state, viewModel::onAction)
+            HomePortraitScreen(navigator, state, searchQuery, viewModel::onAction, viewModel::onSearch)
         }
         DeviceConfiguration.MOBILE_LANDSCAPE -> {}
     }

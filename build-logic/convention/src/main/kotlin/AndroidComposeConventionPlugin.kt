@@ -34,6 +34,7 @@ class AndroidComposeConventionPlugin: Plugin<Project> {
                 add(Dependencies.implementation, libs.findLibrary("compose-adaptive-layout").get())
                 add(Dependencies.implementation, libs.findLibrary("compose-adaptive-navigation").get())
 
+                add(Dependencies.implementation, libs.library("coil"))
                 add(Dependencies.implementation, libs.findLibrary("androidx-lifecycle-runtime-ktx").get())
 
                 add(Dependencies.debugImplementation, libs.findLibrary("androidx-compose-ui-tooling").get())
