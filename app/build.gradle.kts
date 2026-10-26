@@ -46,6 +46,7 @@ dependencies {
     implementation(project(":core:network"))
 
     implementation(project(":data:clothes:category"))
+    implementation(project(":data:clothes:product"))
 
     implementation(project(":features:feature-auth"))
     implementation(project(":features:feature-homepage"))

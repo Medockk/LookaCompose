@@ -1,6 +1,7 @@
 package com.s.looka.data.clothes.category.repository
 
 import com.s.looka.core.common.result.Result
+import com.s.looka.core.common.result.SimpleResult
 import com.s.looka.domain.clothes.category.model.CategoryModel
 import com.s.looka.domain.clothes.category.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
@@ -10,18 +11,18 @@ import kotlin.uuid.Uuid
 
 class CategoryRepositoryImpl @Inject constructor() : CategoryRepository {
 
-    override fun observeAllCategories(): Flow<Result<List<CategoryModel>>> {
+    override fun observeAllCategories(): Flow<SimpleResult<List<CategoryModel>>> {
         return channelFlow {
             val categories = getDumbCategories()
             send(Result.success(categories))
         }
     }
 
-    override suspend fun fetchAllCategories(): Result<List<CategoryModel>> {
+    override suspend fun fetchAllCategories(): SimpleResult<List<CategoryModel>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchCategoryPage(page: Any): Result<List<CategoryModel>> {
+    override suspend fun fetchCategoryPage(page: Any): SimpleResult<List<CategoryModel>> {
         TODO("Not yet implemented")
     }
 

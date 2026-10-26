@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(project(":domain:clothes:category"))
+    implementation(project(":domain:clothes:product"))
 }

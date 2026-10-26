@@ -1,8 +1,8 @@
 package com.s.looka.core.common.result
 
-import com.s.looka.core.common.AppError
+import com.s.looka.core.common.RootError
 
-inline fun <T> Result<T>.onSuccess(action: (T) -> Unit): Result<T> {
+inline fun <T, E: RootError> Result<T, E>.onSuccess(action: (T) -> Unit): Result<T, E> {
     if (this is Result.Success) {
         action(this.data)
     }
@@ -10,33 +10,17 @@ inline fun <T> Result<T>.onSuccess(action: (T) -> Unit): Result<T> {
     return this
 }
 
-inline fun <T, reified E> Result<T>.onFailure(action: (AppError, E?) -> Unit): Result<T> {
-    if (this is Result.Failure<*>) {
-        action(this.error, this.code as? E)
-    }
-
-    return this
-}
-
-inline fun <T> Result<T>.onFailure(action: (AppError) -> Unit): Result<T> {
-    if (this is Result.Failure<*>) {
+inline fun <T, E: RootError> Result<T, E>.onFailure(action: (E) -> Unit): Result<T, E> {
+    if (this is Result.Failure<E>) {
         action(this.error)
     }
 
     return this
 }
 
-inline fun <T> Result<T>.onState(action: (DataState) -> Unit): Result<T> {
-    if (this is Result.State) {
-        action(this.state)
-    }
+fun <T, E: RootError> Result<T, E>.requireData(): T = if (this is Result.Success) data
+    else error("Failed to extract data")
 
-    return this
-}
-
-fun <T> Result<T>.requireData(): T = if (this is Result.Success) data
-    else error("Failed to exact data")
-
-fun <T> Result<T>.get() = if (this is Result.Success) data
+fun <T, E: RootError> Result<T, E>.getOrNull() = if (this is Result.Success) data
     else null
 

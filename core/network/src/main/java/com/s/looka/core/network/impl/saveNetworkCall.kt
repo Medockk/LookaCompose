@@ -1,13 +1,14 @@
 package com.s.looka.core.network.impl
 
 import android.util.Log
+import com.s.looka.core.common.DataError
 import com.s.looka.core.common.result.Result
-import com.s.looka.core.network.api.NetworkError
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.isSuccess
 import io.ktor.util.reflect.TypeInfo
+import kotlinx.serialization.SerializationException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 private const val TAG = "Network"
 private const val INFO = "saveNetworkCall"
@@ -16,45 +17,66 @@ private const val INFO = "saveNetworkCall"
 internal suspend fun <T> saveNetworkCall(
     typeInfo: TypeInfo,
     action: suspend () -> HttpResponse,
-): Result<T> {
+): Result<T, DataError.Network> {
     return try {
         Log.i(TAG, "$INFO: Making request")
         val response = action()
         Log.i(TAG, "$INFO: Get response")
 
         // (200 .. 299)
-        if (response.status.isSuccess()) {
-            Log.i(TAG, "$INFO: Success response")
+        when (response.status.value) {
+            in 200..299 -> {
+                Log.i(TAG, "$INFO: Success response")
 
-            // checking for empty JSON response
-            if (typeInfo.type == Unit::class) {
-                return Result.success(Unit as T)
+                // checking for empty JSON response
+                if (typeInfo.type == Unit::class) {
+                    return Result.success(Unit as T)
+                }
+
+                return response.body(typeInfo)
             }
 
-            if (typeInfo.type == List::class) {
-                return Result.success(emptyList<T>() as T)
+            401 -> {
+                Log.i(TAG, "$INFO: Unauthorized response")
+                return Result.failure(DataError.Network.UNAUTHORIZED)
             }
 
-            if (response.status == HttpStatusCode.NoContent) {
-                return Result.success(null as T)
+            403 -> {
+                Log.i(TAG, "$INFO: Forbidden response")
+                return Result.failure(DataError.Network.FORBIDDEN)
             }
 
-        }
+            404 -> {
+                Log.i(TAG, "$INFO: NotFound response")
+                return Result.failure(DataError.Network.NOT_FOUND)
+            }
 
-        if (response.status == HttpStatusCode.Forbidden) {
-            Log.i(TAG, "$INFO: Forbidden response")
-            return Result.failure(NetworkError.Forbidden)
-        }
-        if (response.status == HttpStatusCode.RequestTimeout) {
-            Log.i(TAG, "$INFO: RequestTimeout response")
-            return Result.failure(NetworkError.RequestTimeout)
-        }
+            408 -> {
+                Log.i(TAG, "$INFO: Timeout response")
+                return Result.failure(DataError.Network.REQUEST_TIMEOUT)
+            }
 
-        val body: T = response.body(typeInfo)
-        return Result.success(body)
+            in 500..599 -> {
+                Log.i(TAG, "$INFO: Server error")
+                return Result.failure(DataError.Network.SERVER_ERROR)
+            }
 
+            else -> {
+                Log.i(TAG, "$INFO: Unknown error")
+                return Result.failure(DataError.Network.UNKNOWN)
+            }
+        }
+    } catch (e: UnknownHostException) {
+        Log.e(TAG, "$INFO: Catch exception when do saveNetworkCall function", e)
+        Result.failure(DataError.Network.NO_INTERNET)
+    } catch (e: SocketTimeoutException) {
+        Log.e(TAG, "$INFO: Catch exception when do saveNetworkCall function", e)
+        Result.failure(DataError.Network.REQUEST_TIMEOUT)
+    } catch (e: SerializationException) {
+        Log.e(TAG, "$INFO: Catch exception when do saveNetworkCall function", e)
+        Result.failure(DataError.Network.SERIALIZATION)
     } catch (e: Exception) {
         Log.e(TAG, "$INFO Catch exception when do saveNetworkCall function", e)
-        Result.failure(NetworkError.UnknowError)
+        Result.failure(DataError.Network.UNKNOWN)
     }
 }

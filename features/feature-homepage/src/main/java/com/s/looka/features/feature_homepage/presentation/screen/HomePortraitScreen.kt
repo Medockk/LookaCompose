@@ -7,6 +7,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -21,13 +22,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -35,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.s.looka.core.navigation.Navigator
 import com.s.looka.core.ui.components.ProductCard
 import com.s.looka.core.ui.components.chip.DefaultChip
+import com.s.looka.core.ui.components.indicator.LoadingIndicator
 import com.s.looka.core.ui.components.topbar.DefaultHeader
 import com.s.looka.core.ui.theme.LookaTheme
 import com.s.looka.features.feature_homepage.R
@@ -133,18 +139,25 @@ internal fun HomePortraitScreen(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                items(50) {
+                if (state.products.isEmpty()) {
+                    item {
+                        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                            LoadingIndicator()
+                        }
+                    }
+                }
+
+                itemsIndexed(state.products) { index, product ->
                     ProductCard(
-                        name = "Product #$it",
-                        price = 1234.23f,
-                        isFavorite = it % 5 == 0,
+                        name = product.name,
+                        price = product.price,
+                        isFavorite = index % 5 == 0,
                         onFavoriteIconClick = {},
-                        photoUrl = "https://www.mydesignation.com/cdn/shop/files/unstoppable-reflective-print-oversized-t-shirt-mydesignation-4800251.jpg?v=1778972951",
+                        photoUrl = product.photoUrl,
                         modifier = Modifier.clickable {
                             navigator.navigate(ProductDetails)
                         },
-                        discount = if (it % 6 == 0) 52.2f
-                        else null
+                        discount = product.discount
                     )
                 }
             }

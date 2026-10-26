@@ -12,8 +12,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import java.util.Collections
+import javax.inject.Inject
 
-internal class ConnectivityManagerCheckerImpl(context: Context): ConnectivityManagerChecker {
+internal class ConnectivityManagerCheckerImpl @Inject constructor(context: Context): ConnectivityManagerChecker {
 
     private val manager = context.getSystemService<ConnectivityManager>()
 
@@ -33,8 +35,9 @@ internal class ConnectivityManagerCheckerImpl(context: Context): ConnectivityMan
     }
 
     override fun observeConnectionState(): Flow<Boolean> = callbackFlow {
-        // hashSet of valid (has internet) networks
-        val validNetworks = HashSet<Network>()
+        // new: Thread-save HashSet
+        //  of valid (has internet) networks
+        val validNetworks = Collections.synchronizedSet(HashSet<Network>())
 
         fun updateState() {
             trySend(validNetworks.isNotEmpty())

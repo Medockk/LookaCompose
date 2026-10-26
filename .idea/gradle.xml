@@ -34,9 +34,11 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/clothes" />
             <option value="$PROJECT_DIR$/data/clothes/category" />
+            <option value="$PROJECT_DIR$/data/clothes/product" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/clothes" />
             <option value="$PROJECT_DIR$/domain/clothes/category" />
+            <option value="$PROJECT_DIR$/domain/clothes/product" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/feature-account" />
             <option value="$PROJECT_DIR$/features/feature-auth" />

@@ -7,7 +7,7 @@ import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.s.looka.core.common.viewmodel.BaseViewModelEvent
+import com.s.looka.core.common.viewmodel.CommonUiEvent
 import com.s.looka.core.navigation.Navigator
 import com.s.looka.core.ui.util.DeviceConfiguration
 import com.s.looka.core.ui.util.LocalDeviceConfiguration
@@ -48,14 +48,7 @@ fun LoginScreenRoot(
 
     ObserveEvent(viewModel.events) { event ->
         when (event) {
-            is BaseViewModelEvent.OnError -> {
-
-            }
-            is LoginEvent -> {
-                when (event) {
-                    LoginEvent.OnSuccessLogged -> onSuccessLogged()
-                }
-            }
+            LoginEvent.OnSuccessLogged -> onSuccessLogged()
         }
     }
 }

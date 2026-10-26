@@ -40,7 +40,7 @@ import com.s.looka.core.ui.theme.LookaTheme
 @Composable
 fun ProductCard(
     name: String,
-    price: Float,
+    price: Double,
     isFavorite: Boolean,
     onFavoriteIconClick: () -> Unit,
     photoUrl: String?,

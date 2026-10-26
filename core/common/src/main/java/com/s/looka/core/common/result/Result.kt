@@ -1,21 +1,16 @@
 package com.s.looka.core.common.result
 
-import com.s.looka.core.common.AppError
+import com.s.looka.core.common.RootError
 
-sealed interface Result<out T> {
+typealias SimpleResult<T> = Result<T, RootError>
 
-    data class Success<T>(val data: T): Result<T>
+sealed interface Result<out T, out E: RootError> {
 
-    data class Failure<E>(val error: AppError, val code: E?): Result<Nothing> {
-        constructor(error: AppError): this(error, code = null)
-    }
-
-    data class State(val state: DataState): Result<Nothing>
+    data class Success<out T>(val data: T): Result<T, Nothing>
+    data class Failure<out E: RootError>(val error: E): Result<Nothing, E>
 
     companion object {
-        fun <T> success(data: T) = Success(data)
-
-        fun <E> failure(error: AppError, code: E) = Failure(error, code)
-        fun failure(error: AppError) = Failure<Nothing>(error)
+        fun <T> success(data: T): Result<T, Nothing> = Success(data)
+        fun <E: RootError> failure(error: E): Result<Nothing, E> = Failure(error)
     }
 }

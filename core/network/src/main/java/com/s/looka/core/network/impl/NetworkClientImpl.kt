@@ -1,12 +1,10 @@
 package com.s.looka.core.network.impl
 
 import android.util.Log
-import com.s.looka.core.common.AppError
+import com.s.looka.core.common.DataError
 import com.s.looka.core.common.result.Result
-import com.s.looka.core.network.api.ConnectivityManagerChecker
 import com.s.looka.core.network.api.NetworkClient
 import com.s.looka.core.network.api.NetworkClientConfig
-import com.s.looka.core.network.api.NetworkError
 import com.s.looka.core.network.di.DefaultNetworkConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.request.header
@@ -19,28 +17,30 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.reflect.KClass
+import kotlin.reflect.KType
 
 internal class NetworkClientImpl @Inject constructor(
     private val httpClient: HttpClient,
     @DefaultNetworkConfig
-    private val config: NetworkClientConfig,
-    private val connectivityManagerChecker: ConnectivityManagerChecker
+    private val config: NetworkClientConfig
 ) : NetworkClient {
 
     override suspend fun <T> request(
         url: String,
-        clazz: KClass<*>,
+        kType: KType,
         methodType: NetworkClient.MethodType,
         block: (NetworkClient.Builder.() -> Unit)?,
-    ): Result<T> {
+    ): Result<T, DataError.Network> {
 
-        val isConnectionEnable = connectivityManagerChecker.isConnectionEnable()
-        if (!isConnectionEnable) return Result.failure(AppError.Http.NoInternet)
+        val kClass = kType.classifier as? KClass<*> ?: error("Unsupported type of $kType")
+        val typeInfo = TypeInfo(type = kClass,
+            kotlinType = kType
+        )
 
         val url = resolveUrl(config.baseUrl, endpoint = url)
         Log.i("Network", "NetworkClientImpl: Making request with url: $url")
 
-        return saveNetworkCall(TypeInfo(clazz)) {
+        return saveNetworkCall(typeInfo) {
             // switching at IO dispatchers for all network requests
             withContext(Dispatchers.IO) {
                 httpClient.request(urlString = url) {
@@ -66,7 +66,7 @@ internal class NetworkClientImpl @Inject constructor(
 
     private fun resolveUrl(baseUrl: String, endpoint: String): String {
         return if (
-            baseUrl.startsWith("http", ignoreCase = true) ||
+            endpoint.startsWith("http", ignoreCase = true) ||
             endpoint.startsWith("https", ignoreCase = true)
         ) { endpoint }
         else {
