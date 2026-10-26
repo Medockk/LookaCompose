@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.s.looka.core.ui.theme.LookaTheme
 import kotlinx.coroutines.delay
 import kotlin.math.cos
 import kotlin.math.sin
@@ -24,10 +25,10 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun LoadingIndicator(
-    count: Int,
-    size: Dp,
-    color: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    count: Int = 12,
+    size: Dp = 24.dp,
+    color: Color = LookaTheme.colors.primary900
 ) {
     var activeIndex by remember { mutableIntStateOf(0) }
     

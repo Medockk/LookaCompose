@@ -1,12 +1,9 @@
 package com.s.looka.core.common.utils
 
-import android.util.Patterns
+object EmailValidator {
+    private val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$".toRegex()
 
-class EmailValidator {
-
-    companion object {
-        fun isValidate(email: String): Boolean {
-            return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        }
+    fun isValid(email: String): Boolean {
+        return email.isNotBlank() && EMAIL_REGEX.matches(email)
     }
 }

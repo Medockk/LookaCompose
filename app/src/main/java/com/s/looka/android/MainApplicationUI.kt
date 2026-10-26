@@ -1,18 +1,20 @@
-@file:OptIn(ExperimentalLayoutApi::class)
-
 package com.s.looka.android
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.s.looka.android.navigation.NavigationContainer
 import com.s.looka.core.navigation.Navigator
-import com.s.looka.core.navigation.collectNavCommands
+import com.s.looka.core.navigation.compose.collectNavCommands
+import com.s.looka.core.navigation.enterTransition
+import com.s.looka.core.navigation.exitTransition
+import com.s.looka.core.navigation.popExitTransition
+import com.s.looka.core.navigation.predictivePopExitTransition
 import com.s.looka.features.favorite.presentation.featureFavoriteGraph
 import com.s.looka.features.feature_account.presentation.featureAccountGraph
 import com.s.looka.features.feature_auth.FeatureAuthNavigation
@@ -28,17 +30,22 @@ fun MainApplicationUI(navigator: Navigator) {
     val controller = rememberNavController()
     navigator.collectNavCommands(navController = controller)
 
+    val currentBackStack by controller.currentBackStackEntryAsState()
+
     navigator.NavigationContainer(controller) { p ->
         NavHost(
             modifier = Modifier.padding(p),
             navController = controller,
             startDestination = FeatureHomeNavigation,
-            enterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start)
-            },
-            exitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
-            }
+
+
+            enterTransition = navigator.registry.enterTransition(),
+            exitTransition = navigator.registry.exitTransition(),
+//            popEnterTransition = navigator.registry.popEnterTransition(),
+            popExitTransition = navigator.registry.popExitTransition(),
+
+//            predictivePopEnterTransition = navigator.registry.predictivePopEnterTransition(),
+            predictivePopExitTransition = navigator.registry.predictivePopExitTransition()
         ) {
             featureAuth(navigator) {
                 navigator.navigate(FeatureHomeNavigation) {

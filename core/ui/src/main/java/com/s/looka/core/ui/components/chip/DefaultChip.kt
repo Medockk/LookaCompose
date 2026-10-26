@@ -1,6 +1,8 @@
 package com.s.looka.core.ui.components.chip
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Text
@@ -27,14 +29,17 @@ fun DefaultChip(
             Text(
                 text = label,
                 color = LookaTheme.colors.inversedColorFor(selectedColor),
-                style = LookaTheme.typography.b1Medium
+                style = LookaTheme.typography.b1Medium,
+                modifier = Modifier
+                    .padding(vertical = 5.dp, horizontal = 10.dp)
             )
         },
         modifier = modifier,
         colors = AssistChipDefaults.assistChipColors(
             containerColor = selectedColor
         ),
-        border = if (isSelected) BorderStroke(1.dp, LookaTheme.colors.primary100)
-        else null
+        border = if (isSelected) null
+        else BorderStroke(1.dp, LookaTheme.colors.primary100),
+        shape = RoundedCornerShape(10.dp)
     )
 }

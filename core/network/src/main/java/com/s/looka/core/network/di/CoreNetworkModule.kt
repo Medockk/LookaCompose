@@ -41,9 +41,4 @@ internal object CoreNetworkModule {
             override val baseUrl: String = NetworkClientConfig.DEFAULT_BASE_URL
         }
     }
-
-    @Provides
-    @Singleton
-    fun provideConnectivityManagerChecker(@ApplicationContext context: Context) =
-        ConnectivityManagerCheckerImpl(context)
 }

@@ -1,22 +1,27 @@
 package com.s.looka.features.feature_auth.presentation.signup
 
-import com.s.looka.core.common.AppError
+import androidx.annotation.StringRes
+import com.s.looka.core.common.RootError
 import com.s.looka.features.feature_auth.R
 
-internal data object SignupError {
-    data object EmptyFullName: AppError.Local<Int> {
+internal sealed interface SignupError: RootError {
+
+    @get:StringRes
+    val type: Int
+
+    data object EmptyFullName: SignupError {
         override val type: Int
             get() = R.string.error_empty_full_name
     }
-    data object EmptyEmail: AppError.Local<Int> {
+    data object EmptyEmail: SignupError {
         override val type: Int
             get() = R.string.error_empty_email
     }
-    data object EmptyPassword: AppError.Local<Int> {
+    data object EmptyPassword: SignupError {
         override val type: Int
             get() = R.string.error_empty_password
     }
-    data object InvalidEmail: AppError.Local<Int> {
+    data object InvalidEmail: SignupError {
         override val type: Int
             get() = R.string.error_invalid_email
     }

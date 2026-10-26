@@ -14,12 +14,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.s.looka.core.common.viewmodel.BaseViewModelEvent
+import com.s.looka.core.common.viewmodel.CommonUiEvent
 import com.s.looka.core.navigation.Navigator
 import com.s.looka.core.ui.util.DeviceConfiguration
 import com.s.looka.core.ui.util.LocalDeviceConfiguration
 import com.s.looka.core.ui.util.ObserveEvent
-import com.s.looka.core.ui.util.asString
 import com.s.looka.features.feature_auth.presentation.signup.SignupError
 import com.s.looka.features.feature_auth.presentation.signup.SignupEvent
 import com.s.looka.features.feature_auth.presentation.signup.SignupViewModel
@@ -68,23 +67,23 @@ internal fun SignupScreenRoot(
 
     ObserveEvent(viewModel.events) { event ->
         when (event) {
-            is SignupEvent -> {
-                when (event) {
-                    SignupEvent.OnSuccess -> onSuccessAuthentication()
-                }
-            }
+            SignupEvent.OnSuccess -> onSuccessAuthentication()
 
-            is BaseViewModelEvent.OnError -> {
-                if (event.error is SignupError.InvalidEmail) {
-                    isInvalidEmail = true
-                    return@ObserveEvent
-                }
+//            is CommonUiEvent.OnError -> {
+//                if (event.error is SignupError.InvalidEmail) {
+//                    isInvalidEmail = true
+//                    return@ObserveEvent
+//                }
 
-                snackbarHostState.showSnackbar(event.error.asString(context))
-                if (isInvalidEmail) {
-                    isInvalidEmail = false
-                }
-            }
+                // TODO преобразование RootError в String
+//                if (event.error is SignupError) {
+//                    val error = (event.error) as SignupError
+//                    snackbarHostState.showSnackbar(UiText.Resource(error.type).asString())
+//                }
+//                if (isInvalidEmail) {
+//                    isInvalidEmail = false
+//                }
+//            }
         }
     }
 }

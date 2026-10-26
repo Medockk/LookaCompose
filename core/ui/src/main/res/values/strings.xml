@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_local_dick_full">Диск заполнен</string>
+    <string name="error_local_not_found">Не найдено</string>
+    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="error_network_no_internet">Нет подключения к интернету</string>
+    <string name="error_network_request_timeout">Превышено время ожидания</string>
+    <string name="error_network_unauthorized">Неавторизован</string>
+    <string name="error_network_forbidden">Доступ закрыт</string>
+    <string name="error_network_not_found">Элемент не найдено</string>
+    <string name="error_network_server_error">Серверная ошибка</string>
+</resources>

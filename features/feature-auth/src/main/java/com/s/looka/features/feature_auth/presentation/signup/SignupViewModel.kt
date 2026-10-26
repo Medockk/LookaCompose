@@ -1,62 +1,56 @@
 package com.s.looka.features.feature_auth.presentation.signup
 
 import androidx.lifecycle.viewModelScope
-import com.s.looka.core.common.AppError
+import com.s.looka.core.common.RootError
 import com.s.looka.core.common.utils.EmailValidator
-import com.s.looka.core.common.viewmodel.BaseViewModelEvent
-import com.s.looka.core.common.viewmodel.BaseViewModelHolder
+import com.s.looka.core.common.viewmodel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 
 @HiltViewModel
-internal class SignupViewModel @Inject constructor() : BaseViewModelHolder<SignupState, SignupEvent>() {
-
-    override val _state = MutableStateFlow(SignupState())
-
-    override val _events = Channel<SignupEvent>(Channel.BUFFERED)
+internal class SignupViewModel @Inject constructor() : BaseViewModel<SignupState, SignupEvent>(
+    SignupState()
+) {
 
     fun onAction(action: SignupAction) {
         when (action) {
             is SignupAction.OnEmailChange -> {
-                _state.update {
+                updateState {
                     it.copy(
                         email = action.email,
-                        isEmailValid = EmailValidator.isValidate(action.email)
+                        isEmailValid = EmailValidator.isValid(action.email)
                     )
                 }
             }
             is SignupAction.OnFullNameChange -> {
-                _state.update {
+                updateState {
                     it.copy(fullName = action.fullName)
                 }
             }
             is SignupAction.OnPasswordChange -> {
-                _state.update {
+                updateState {
                     it.copy(password = action.password)
                 }
             }
             SignupAction.OnPasswordVisibilityChange -> {
-                _state.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
+                updateState { it.copy(isPasswordVisible = !it.isPasswordVisible) }
             }
 
             SignupAction.OnSignupClick -> {
 
                 checkFields { error ->
-                    sendEvent(BaseViewModelEvent.OnError(error))
+                    showError(error)
                     return
                 }
 
-                _state.update { it.copy(isLoading = true) }
+                updateState { it.copy(isLoading = true) }
                 viewModelScope.launch {
                     delay(5.seconds)
-                    _state.update { it.copy(isLoading = false) }
+                    updateState { it.copy(isLoading = false) }
                     sendEvent(SignupEvent.OnSuccess)
                 }
             }
@@ -64,8 +58,7 @@ internal class SignupViewModel @Inject constructor() : BaseViewModelHolder<Signu
         }
     }
 
-    private inline fun checkFields(onError: (error: AppError) -> Unit) {
-        val currentState = _state.value
+    private inline fun checkFields(onError: (error: RootError) -> Unit) {
         if (currentState.fullName.isBlank()) {
             onError(SignupError.EmptyFullName)
             return
@@ -78,7 +71,7 @@ internal class SignupViewModel @Inject constructor() : BaseViewModelHolder<Signu
             onError(SignupError.EmptyPassword)
             return
         }
-        if (!EmailValidator.isValidate(currentState.email)) {
+        if (!EmailValidator.isValid(currentState.email)) {
             onError(SignupError.InvalidEmail)
             return
         }

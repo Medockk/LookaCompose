@@ -14,6 +14,7 @@
 .cxx
 local.properties
 .artifacts
+/app/looka
 
 # Project exclude paths
 /build-logic/convention/build/

@@ -13,4 +13,7 @@ android {
 dependencies {
     api(libs.androidx.navigation)
     implementation(libs.hilt.compose)
+
+
+    implementation(libs.kotlin.reflect)
 }

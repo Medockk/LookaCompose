@@ -1,15 +1,16 @@
 package com.s.looka.core.network.api
 
+import com.s.looka.core.common.DataError
 import com.s.looka.core.common.result.Result
-import kotlin.reflect.KClass
+import kotlin.reflect.KType
 
 interface NetworkClient {
     suspend fun <T> request(
         url: String,
-        clazz: KClass<*>,
+        kType: KType,
         methodType: MethodType,
         block: (Builder.() -> Unit)? = null,
-    ): Result<T>
+    ): Result<T, DataError.Network>
 
     class Builder {
 
