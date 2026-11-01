@@ -8,6 +8,7 @@ import android.net.NetworkRequest
 import android.util.Log
 import androidx.core.content.getSystemService
 import com.s.looka.core.network.api.ConnectivityManagerChecker
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -15,7 +16,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import java.util.Collections
 import javax.inject.Inject
 
-internal class ConnectivityManagerCheckerImpl @Inject constructor(context: Context): ConnectivityManagerChecker {
+internal class ConnectivityManagerCheckerImpl @Inject constructor(
+    @ApplicationContext
+    context: Context
+): ConnectivityManagerChecker {
 
     private val manager = context.getSystemService<ConnectivityManager>()
 

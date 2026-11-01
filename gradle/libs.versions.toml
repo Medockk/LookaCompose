@@ -101,6 +101,7 @@ ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref =
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-web-socket = { group = "io.ktor", name = "ktor-client-websockets", version.ref = "ktor" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -113,6 +114,7 @@ ktor = [
     "ktor-client-okhttp",
     "ktor-client-content-negotiation",
     "ktor-serialization-kotlinx-json",
+    "ktor-web-socket"
 ]
 room = [
     "room-ktx",
